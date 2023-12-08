@@ -16,6 +16,11 @@ memCopy::
     jr nz, .copyloop
 ret
 
+sound_off::
+    xor a
+    ld [SOUND_CONTROL], a
+ret
+
 haltProgram::
   halt
 ret

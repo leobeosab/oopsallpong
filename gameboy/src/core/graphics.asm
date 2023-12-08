@@ -1,4 +1,5 @@
 INCLUDE "gb/constants.inc"
+INCLUDE "gb/hardware.inc"
 
 SECTION "graphics_storage", rom0
 
@@ -10,10 +11,20 @@ copyFont::
 ret
 
 loadAssets::
-    ld hl, $9000 + 16
+    ld hl, $8000
     ld de, Paddle
     ld bc, 16
     call memCopy
+ret
+
+clearOAM::
+    ld a, 0
+    ld b, 160
+    ld hl, _OAMRAM
+ClearOam:
+    ld [hli], a
+    dec b
+    jp nz, ClearOam
 ret
 
 showString::
@@ -26,9 +37,8 @@ showString::
 ret
 
 Paddle:
-DB $e0, $e0, $e7, $e7, $e1, $e1, $ff, $ff
-DB $e0, $e0, $e0, $e0, $e0, $e0, $e0, $e0
-PaddleEnd:
+DB $18, $18, $18, $18, $18, $18, $18, $18
+DB $18, $18, $18, $18, $18, $18, $18, $18
 
 FontTiles:
 INCBIN "assets/font.chr"

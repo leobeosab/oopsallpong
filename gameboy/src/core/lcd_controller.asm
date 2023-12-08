@@ -1,6 +1,7 @@
 SECTION "LCD code", ROM0
 
 INCLUDE "gb/constants.inc"
+INCLUDE "gb/hardware.inc"
 
 lcd_off::
     xor a
@@ -8,7 +9,7 @@ lcd_off::
 ret
 
 lcd_on::
-    ld a, %10000001
+    ld a, LCDCF_ON | LCDCF_BGON | LCDCF_OBJON
     ld [LCD_CTRL], a
 ret
 
